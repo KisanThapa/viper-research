@@ -1,0 +1,27 @@
+```{r}
+library(viper)
+data(bcellViper, package = "bcellViper")
+```
+```{r}
+# Read data/5knormalized_mat.tsv as NumericMatrix
+sim_data <- read.table("data/simulated/simulated_data.tsv", header = TRUE, row.names = 1, sep = "\t")
+sim_data <- as.matrix(sim_data)
+```
+```{r}
+# Read data/prior_network.tsv as DataFrame
+network <- read.table("data/simulated/simulated_network.tsv", header = TRUE, sep = "\t")
+```
+```{r}
+regulon_prior_net <- aracne2regulon("data/simulated/simulated_network.tsv", "data/simulated/simulated_data.tsv", verbose = TRUE)
+print(regulon_prior_net)
+```
+```{r}
+res <- viper(sim_data, regulon_prior_net)
+print(res[1:3, 1:3])
+```
+```{r}
+tmp <- rowTtest(res, "description", c("CB", "CC"), "N")
+tmp[1:3, 1:3]
+```
+```{r}
+```
